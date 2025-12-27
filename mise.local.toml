@@ -1,0 +1,4 @@
+[env]
+CLOUDFLARE_ACCOUNT_ID = "66da9ec84543179bb5f953f6480f49bd"
+CLOUDFLARE_API_TOKEN = "RLVKpLvVuRE1q2K_7CUq72PSkGJbSz_YceVYuJQJ"
+_.path = { path = ["/opt/homebrew/opt/llvm/bin:$PATH"], tools = true }

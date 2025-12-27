@@ -1,0 +1,23 @@
+{
+  "main": "dist/_worker.js/index.js",
+  "name": "site",
+  "compatibility_date": "2025-12-27",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "routes": [
+    { "pattern": "tbhb.dev", "custom_domain": true },
+    { "pattern": "www.tbhb.dev", "custom_domain": true }
+  ],
+  "env": {
+    "preview": {
+      "name": "tbhb-dev-preview",
+      "routes": []
+    }
+  }
+}
