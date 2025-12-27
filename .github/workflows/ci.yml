@@ -144,6 +144,7 @@ jobs:
           echo "url=${URL}" >> "$GITHUB_OUTPUT"
 
   deploy-production:
+    name: "Deploy Production"
     runs-on: ubuntu-latest
     timeout-minutes: 10
     needs: build
