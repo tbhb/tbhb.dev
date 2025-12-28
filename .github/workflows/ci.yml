@@ -48,7 +48,10 @@ jobs:
       - name: Cache Vale styles
         uses: actions/cache@v4
         with:
-          path: .vale
+          path: |
+            .vale/Google
+            .vale/proselint
+            .vale/write-good
           key: vale-styles-${{ hashFiles('.vale.ini') }}
           restore-keys: |
             vale-styles-
