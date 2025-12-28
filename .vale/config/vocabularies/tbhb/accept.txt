@@ -1,12 +1,100 @@
 tbhb.dev
+
+# Names
 Abbink
+Alastair
+Baxter
 Bringhurst
+Egan
+Eghbal
 Graaf
+Hurley
+Kleppmann
+Levee
+Myke
+Ousterhout
+Reynolds
+Sivers
+Tufte
+
+# Typography
+Elzevir
 monospace
 Plex
-skeuomorphism
 Spectral
 subsetting
-Tufte
 viewport
 viewports
+
+# Technology - General
+CLI
+CSS
+HTML
+composability
+composable
+debuggability
+dotfiles
+e-ink
+frontend
+frontmatter
+localhost
+ORMs
+runtimes
+skeuomorphism
+trackpad
+
+# Technology - Languages & Frameworks
+Astro
+dataclass
+dataclasses
+JavaScript
+JSONLT
+Lua
+Markdoc
+Pydantic
+typing-graph
+
+# Technology - Tools
+devctl
+Fastmail
+Feedbin
+Ghostty
+Homebrew
+mise
+Neovim
+nvm
+pnpm
+pyenv
+Raycast
+tmux
+Waveshare
+
+# Technology - Companies & Services
+Cloudflare
+Linear
+
+# Technology - Hardware
+HHKB
+Topre
+
+# Typography & Writing
+Blockquotes
+
+# Technology - Code Keywords (in code blocks)
+bool
+config
+const
+createdAt
+datetime
+defineCollection
+dev
+maxSize
+myapp
+published_at
+publishedAt
+ttl
+updated_at
+updatedAt
+
+# Standards
+WCAG

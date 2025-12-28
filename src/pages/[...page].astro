@@ -1,0 +1,26 @@
+---
+import { getCollection, render } from 'astro:content';
+import PageLayout from '../layouts/PageLayout.astro';
+import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
+
+export const getStaticPaths = (async () => {
+  const pages = await getCollection('pages');
+  return pages.map((page) => ({
+    params: { page: page.id },
+    props: { page },
+  }));
+}) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { page } = Astro.props;
+const { title, description } = page.data;
+const { Content } = await render(page);
+
+// Derive currentPage from the page ID for navigation highlighting
+const currentPage = `/${page.id}`;
+---
+
+<PageLayout title={title} description={description} currentPage={currentPage}>
+  <Content />
+</PageLayout>

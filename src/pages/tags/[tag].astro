@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SEO from '../../components/seo/SEO.astro';
+import PostList from '../../components/blog/PostList.astro';
+import { getAllTags, getPostsByTag } from '../../lib/collections';
+import { formatTagName } from '../../lib/tags';
+import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
+
+export const getStaticPaths = (async () => {
+  const tags = await getAllTags();
+  return Array.from(tags.keys()).map((tag) => ({
+    params: { tag },
+    props: { tag },
+  }));
+}) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { tag } = Astro.props as Props;
+const posts = await getPostsByTag(tag);
+const pageTitle = formatTagName(tag);
+const pageDescription = `Posts tagged with "${tag}".`;
+---
+
+<BaseLayout
+  title={`${pageTitle} - Tony Burns`}
+  description={pageDescription}
+  currentPage="/tags"
+>
+  <SEO slot="head" type="page" title={pageTitle} description={pageDescription} />
+  <h1>{pageTitle}</h1>
+  <p>{posts.length} {posts.length === 1 ? 'post' : 'posts'} tagged with "{tag}".</p>
+
+  <PostList posts={posts} groupByYear={true} showExcerpts={true} />
+
+  <p class="view-all"><a href="/tags">View all tags</a></p>
+</BaseLayout>

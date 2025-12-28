@@ -44,8 +44,20 @@ install-node:
 install-python:
   uv sync
 
+# Run Lighthouse
+lighthouse *args:
+  pnpm exec lighthouse "$@"
+
+# Run Lighthouse CI
+lighthouse-ci:
+  pnpm exec lhci autorun
+
 # Run all linters
-lint: lint-markdown lint-prose lint-spelling lint-web
+lint: lint-astro lint-web lint-markdown lint-prose lint-spelling
+
+# Lint Astro files
+lint-astro:
+  pnpm exec astro check
 
 # Lint Markdown files
 lint-markdown:

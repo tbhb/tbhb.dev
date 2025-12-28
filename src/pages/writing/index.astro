@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SEO from '../../components/seo/SEO.astro';
+import PostList from '../../components/blog/PostList.astro';
+import { getPublishedPosts } from '../../lib/collections';
+
+const posts = await getPublishedPosts();
+const pageDescription = "Thoughts on software engineering, leadership, and the craft of building things that last.";
+---
+
+<BaseLayout
+  title="Writing - Tony Burns"
+  description={pageDescription}
+  currentPage="/writing"
+>
+  <SEO slot="head" type="page" title="Writing" description={pageDescription} />
+  <header>
+    <h1>Writing</h1>
+    <p>Thoughts on software engineering, leadership, and the craft of building things that last. I write about the lessons learned from two decades of shipping software, leading teams, and navigating the ever-changing landscape of technology.</p>
+  </header>
+
+  <nav class="archive-nav" aria-label="Archive navigation">
+    <p>Browse by <a href="/tags">tags</a> or <a href="/categories">categories</a>.</p>
+  </nav>
+
+  <PostList posts={posts} groupByYear={true} showExcerpts={true} />
+</BaseLayout>

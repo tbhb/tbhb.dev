@@ -1,0 +1,45 @@
+---
+import PostCard from './PostCard.astro';
+import type { Post } from '../../lib/collections';
+
+interface Props {
+  posts: Post[];
+  showExcerpts?: boolean;
+  groupByYear?: boolean;
+}
+
+const { posts, showExcerpts = false, groupByYear = false } = Astro.props;
+
+function groupPostsByYear(posts: Post[]): Map<number, Post[]> {
+  const groups = new Map<number, Post[]>();
+  for (const post of posts) {
+    const year = post.data.publishedAt.getFullYear();
+    const existing = groups.get(year) ?? [];
+    existing.push(post);
+    groups.set(year, existing);
+  }
+  return groups;
+}
+
+const postsByYear = groupByYear ? groupPostsByYear(posts) : null;
+const years = postsByYear ? Array.from(postsByYear.keys()).sort((a, b) => b - a) : [];
+---
+
+{groupByYear && postsByYear ? (
+  years.map((year) => (
+    <section class="archive-year" aria-labelledby={`year-${year}`}>
+      <h2 id={`year-${year}`} class="archive-year__heading">{year}</h2>
+      <ul class="post-list" role="list">
+        {postsByYear.get(year)?.map((post) => (
+          <PostCard post={post} showExcerpt={showExcerpts} />
+        ))}
+      </ul>
+    </section>
+  ))
+) : (
+  <ul class="post-list" role="list">
+    {posts.map((post) => (
+      <PostCard post={post} showExcerpt={showExcerpts} />
+    ))}
+  </ul>
+)}

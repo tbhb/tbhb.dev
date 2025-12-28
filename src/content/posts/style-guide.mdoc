@@ -1,0 +1,251 @@
+---
+title: "Style Guide"
+description: "A comprehensive guide to the typography and styling of this site"
+publishedAt: 2025-12-27
+draft: true
+category: notes
+tags:
+  - design
+  - typography
+  - testing
+---
+
+This style guide demonstrates the typographic elements and styling available on this site. It serves as both a reference and a testing ground for visual consistency across different content types.
+
+## Headings
+
+Headings establish hierarchy and help readers navigate content. This site uses a clear progression from h2 through h4 for article content (h1 serves as the page title).
+
+### Third level heading
+
+Third level headings break major sections into logical subsections. Use them sparingly to avoid fragmenting the reading experience.
+
+#### Fourth level heading
+
+Fourth level headings work well for fine-grained organization within subsections. Beyond this level, consider restructuring the content instead of adding more heading levels.
+
+## Paragraphs and text
+
+Body text is the foundation of any reading experience. Good typography makes text disappear, allowing ideas to flow directly into the reader's mind without friction.
+
+Short paragraphs work well for emphasis or transition. They give the eye a rest.
+
+Longer paragraphs are essential for developing complex ideas. When an argument requires more than one sentence to unfold, or when a narrative needs room to breathe, the paragraph expands to accommodate. The key is matching paragraph length to content: dense technical explanations might warrant shorter paragraphs, while flowing prose can sustain longer ones. A comfortable reading measure of 60-75 characters per line helps maintain comprehension regardless of paragraph length.
+
+## Lists
+
+Lists organize information for quick scanning and reference.
+
+### Unordered lists
+
+Use unordered lists when the sequence of items does not matter:
+
+- First item in the list
+- Second item with more detail that wraps when the content runs long enough to show wrapping behavior
+- Third item
+- Fourth item with a sub-list:
+  - Nested item one
+  - Nested item two
+  - Nested item three
+- Fifth item returning to the main level
+
+### Ordered lists
+
+Use ordered lists when sequence or ranking matters:
+
+1. Clone the repository from GitHub
+2. Install dependencies with the package manager
+3. Configure environment variables
+4. Start the development server
+5. Open the browser to localhost
+
+## Blockquotes
+
+Blockquotes highlight quotations or emphasize important passages:
+
+> The goal is not to use interesting technology. The goal is to solve problems for users. Sometimes that means using the same tools everyone else uses.
+
+Blockquotes can also span paragraphs:
+
+> Choose boring technology. The databases that have been around for decades. The programming languages that your parents might recognize.
+>
+> PostgreSQL might not be exciting, but it will not wake you up at 3 AM with unexpected behavior.
+
+## Inline formatting
+
+You can style text in different ways for emphasis and clarity:
+
+- **Bold text** draws attention to important terms or concepts
+- *Italic text* provides subtle emphasis or indicates titles
+- ***Bold and italic*** together for strong emphasis (use sparingly)
+- `Inline code` highlights technical terms, file names, or short code snippets
+- [Links](/about) connect to other pages or external resources
+- [External links](https://example.com) point to resources outside this site
+
+## Code blocks
+
+Code blocks display longer code samples with syntax highlighting.
+
+### JavaScript
+
+```javascript
+// A simple configuration example
+const config = {
+  database: {
+    host: process.env.DB_HOST || "localhost",
+    port: parseInt(process.env.DB_PORT, 10) || 5432,
+    name: process.env.DB_NAME || "myapp",
+  },
+  cache: {
+    ttl: 3600,
+    maxSize: 1000,
+  },
+};
+
+export default config;
+```
+
+### TypeScript
+
+```typescript
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  createdAt: Date;
+}
+
+function createUser(data: Omit<User, "id" | "createdAt">): User {
+  return {
+    id: crypto.randomUUID(),
+    createdAt: new Date(),
+    ...data,
+  };
+}
+```
+
+### Python
+
+```python
+from dataclasses import dataclass
+from datetime import datetime
+from typing import Optional
+
+
+@dataclass
+class Post:
+    title: str
+    content: str
+    published_at: datetime
+    updated_at: Optional[datetime] = None
+    draft: bool = False
+
+    def is_published(self) -> bool:
+        return not self.draft and self.published_at <= datetime.now()
+```
+
+### Shell commands
+
+```bash
+# Clone the repository
+git clone https://github.com/tbhb/tbhb.dev.git
+cd tbhb.dev
+
+# Install dependencies
+pnpm install
+
+# Start development server
+pnpm dev
+```
+
+### CSS
+
+```css
+.prose {
+  --measure: 65ch;
+  max-width: var(--measure);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
+}
+
+.prose p {
+  margin-block: var(--space-m);
+}
+
+.prose h2 {
+  margin-block-start: var(--space-xl);
+  margin-block-end: var(--space-s);
+}
+```
+
+### HTML
+
+```html
+<article class="post">
+  <header>
+    <h1>Article Title</h1>
+    <time datetime="2024-12-27">December 27, 2024</time>
+  </header>
+  <div class="content">
+    <p>Article content goes here.</p>
+  </div>
+</article>
+```
+
+### JSON
+
+```json
+{
+  "name": "example-project",
+  "version": "1.0.0",
+  "dependencies": {
+    "astro": "^5.0.0",
+    "typescript": "^5.0.0"
+  }
+}
+```
+
+## Horizontal rules
+
+Horizontal rules separate major sections of content:
+
+---
+
+Use them sparingly. Too many rules fragment the reading experience. Often a heading or extra whitespace serves the same purpose more elegantly.
+
+---
+
+## Mixed content
+
+Real articles combine these elements naturally. Consider this example of explaining a concept:
+
+### Understanding content collections
+
+Content collections in Astro provide **type-safe** access to your content. They combine the flexibility of file-based content with the safety of TypeScript schemas.
+
+To define a collection, create a `content.config.ts` file:
+
+```typescript
+import { defineCollection, z } from "astro:content";
+
+const posts = defineCollection({
+  schema: z.object({
+    title: z.string(),
+    publishedAt: z.date(),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { posts };
+```
+
+The schema validates your frontmatter at build time, catching errors before they reach production. Key benefits include:
+
+1. Type inference in your templates
+2. Build-time validation of content
+3. Autocompletion in your editor
+4. Clear documentation of content structure
+
+> Content collections turn your content into a first-class citizen of your codebase, with all the tooling benefits that implies.
+
+For more details, see the [official documentation](https://docs.astro.build/en/guides/content-collections/).

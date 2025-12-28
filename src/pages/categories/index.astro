@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SEO from '../../components/seo/SEO.astro';
+import CategoryList from '../../components/taxonomy/CategoryList.astro';
+import { getAllCategories } from '../../lib/collections';
+
+const categories = await getAllCategories();
+const pageDescription = "Writing organized by format and depth.";
+---
+
+<BaseLayout
+  title="Categories - Tony Burns"
+  description={pageDescription}
+  currentPage="/categories"
+>
+  <SEO slot="head" type="page" title="Categories" description={pageDescription} />
+  <h1>Categories</h1>
+  <p>Writing organized by format and depth.</p>
+
+  <CategoryList categories={categories} />
+</BaseLayout>

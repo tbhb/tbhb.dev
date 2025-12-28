@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SEO from '../../components/seo/SEO.astro';
+import TagList from '../../components/taxonomy/TagList.astro';
+import { getAllTags } from '../../lib/collections';
+
+const tags = await getAllTags();
+const pageDescription = "Browse posts by topic.";
+---
+
+<BaseLayout
+  title="Tags - Tony Burns"
+  description={pageDescription}
+  currentPage="/tags"
+>
+  <SEO slot="head" type="page" title="Tags" description={pageDescription} />
+  <h1>Tags</h1>
+  <p>Browse posts by topic.</p>
+
+  <TagList tags={tags} />
+</BaseLayout>

@@ -1,0 +1,6 @@
+# https://tbhb.dev/robots.txt
+
+User-agent: *
+Allow: /
+
+Sitemap: https://tbhb.dev/sitemap-index.xml

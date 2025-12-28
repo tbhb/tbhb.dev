@@ -1,13 +1,45 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SEO from '../components/seo/SEO.astro';
+import { getPublishedPosts } from '../lib/collections';
+import { formatDate, formatDateISO } from '../lib/dates';
 
+const allPosts = await getPublishedPosts();
+const recentPosts = allPosts.slice(0, 5);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<title>Tony Burns</title>
-	</head>
-	<body>
-	</body>
-</html>
+<BaseLayout title="Tony Burns" currentPage="/">
+  <SEO slot="head" type="homepage" />
+  <h1 class="sr-only">Tony Burns - Software Engineer</h1>
+  <section class="intro">
+    <p class="intro__text">I'm a software engineer who is passionate about developer experience and platform engineering. I write about crafting developer tools, technologies I'm currently exploring, and the occasional deep dive into interesting problems.</p>
+  </section>
+
+  <section class="recent-posts">
+    <h2>Recent Writing</h2>
+
+    {recentPosts.length > 0 ? (
+      <ul class="post-list">
+        {recentPosts.map((post) => (
+          <li class="post-list__item">
+            <article>
+              <a href={`/writing/${post.id}`} class="post-list__link">
+                <span class="post-list__title">{post.data.title}</span>
+                <time class="post-list__date" datetime={formatDateISO(post.data.publishedAt)}>
+                  {formatDate(post.data.publishedAt, 'short')}
+                </time>
+              </a>
+              {post.data.description && (
+                <p class="post-list__excerpt">{post.data.description}</p>
+              )}
+            </article>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p>No posts yet. Check back soon!</p>
+    )}
+
+    <p class="view-all"><a href="/writing">View all writing</a></p>
+  </section>
+</BaseLayout>

@@ -11,12 +11,21 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/check": "^0.9.6",
     "@astrojs/cloudflare": "^12.6.12",
-    "astro": "^5.16.6"
+    "@astrojs/markdoc": "^0.15.10",
+    "@astrojs/sitemap": "^3.6.0",
+    "astro": "^5.16.6",
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.10",
+    "@fontsource/ibm-plex-mono": "^5.2.7",
+    "@fontsource/spectral": "^5.2.8",
+    "@lhci/cli": "0.15.1",
+    "lighthouse": "13.0.1",
     "markdownlint-cli2": "0.20.0",
+    "shiki": "3.20.0",
     "wrangler": "4.54.0"
   }
 }

@@ -1,0 +1,122 @@
+---
+/**
+ * SEO component for meta tags and JSON-LD structured data.
+ * Uses discriminated union props to handle different page types.
+ */
+import {
+  generateWebSiteSchema,
+  generatePersonSchema,
+  generateBlogPostingSchema,
+  generateWebPageSchema,
+  SITE_NAME,
+  DEFAULT_DESCRIPTION,
+} from '../../lib/seo';
+
+type HomepageProps = {
+  type: 'homepage';
+};
+
+type PageProps = {
+  type: 'page';
+  title: string;
+  description: string;
+};
+
+type PostProps = {
+  type: 'post';
+  title: string;
+  description: string;
+  publishedAt: Date;
+  updatedAt?: Date;
+  tags: string[];
+  slug: string;
+};
+
+type Props = HomepageProps | PageProps | PostProps;
+
+const props = Astro.props as Props;
+
+// Construct canonical URL (use siteUrl fallback to prevent errors if Astro.site is undefined)
+const siteUrl = Astro.site?.href.replace(/\/$/, '') ?? 'https://tbhb.dev';
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+
+// Determine page-specific values based on type
+let title: string;
+let description: string;
+let ogType: string;
+let jsonLd: object;
+
+if (props.type === 'homepage') {
+  title = SITE_NAME;
+  description = DEFAULT_DESCRIPTION;
+  ogType = 'website';
+  jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      generateWebSiteSchema(siteUrl),
+      generatePersonSchema(siteUrl),
+    ],
+  };
+} else if (props.type === 'post') {
+  title = props.title;
+  description = props.description;
+  ogType = 'article';
+  jsonLd = {
+    '@context': 'https://schema.org',
+    ...generateBlogPostingSchema(
+      {
+        title: props.title,
+        description: props.description,
+        publishedAt: props.publishedAt,
+        updatedAt: props.updatedAt,
+        tags: props.tags,
+        slug: props.slug,
+      },
+      siteUrl,
+    ),
+  };
+} else {
+  // type === 'page'
+  title = props.title;
+  description = props.description;
+  ogType = 'website';
+  jsonLd = {
+    '@context': 'https://schema.org',
+    ...generateWebPageSchema(
+      {
+        title: props.title,
+        description: props.description,
+        pathname: Astro.url.pathname,
+      },
+      siteUrl,
+    ),
+  };
+}
+---
+
+<!-- Canonical URL -->
+<link rel="canonical" href={canonicalUrl} />
+
+<!-- Open Graph -->
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:type" content={ogType} />
+<meta property="og:site_name" content={SITE_NAME} />
+
+{props.type === 'post' && (
+  <>
+    <meta property="article:published_time" content={props.publishedAt.toISOString()} />
+    {props.updatedAt && (
+      <meta property="article:modified_time" content={props.updatedAt.toISOString()} />
+    )}
+  </>
+)}
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+
+<!-- JSON-LD Structured Data -->
+<script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

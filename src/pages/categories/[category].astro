@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SEO from '../../components/seo/SEO.astro';
+import PostList from '../../components/blog/PostList.astro';
+import { getAllCategories, getPostsByCategory } from '../../lib/collections';
+import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
+
+export const getStaticPaths = (async () => {
+  const categories = await getAllCategories();
+  return categories.map(({ category }) => ({
+    params: { category: category.data.slug },
+    props: { category },
+  }));
+}) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { category } = Astro.props as Props;
+const posts = await getPostsByCategory(category.data.slug as 'essays' | 'notes' | 'tutorials');
+const pageTitle = category.data.name;
+const pageDescription = category.data.description;
+---
+
+<BaseLayout
+  title={`${pageTitle} - Tony Burns`}
+  description={pageDescription}
+  currentPage="/categories"
+>
+  <SEO slot="head" type="page" title={pageTitle} description={pageDescription} />
+  <h1>{pageTitle}</h1>
+  <p class="category-description">{category.data.description}</p>
+
+  <PostList posts={posts} groupByYear={true} showExcerpts={true} />
+
+  <p class="view-all"><a href="/categories">View all categories</a></p>
+</BaseLayout>

@@ -1,0 +1,17 @@
+---
+import { normalizeTag } from '../../lib/tags';
+
+interface Props {
+  tags: string[];
+}
+
+const { tags } = Astro.props;
+---
+
+<ul class="post-tags" role="list" aria-label="Tags">
+  {tags.map((tag) => (
+    <li>
+      <a href={`/tags/${normalizeTag(tag)}`}>#{tag.toLowerCase()}</a>
+    </li>
+  ))}
+</ul>
