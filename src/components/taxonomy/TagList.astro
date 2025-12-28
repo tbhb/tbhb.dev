@@ -1,0 +1,21 @@
+---
+import { normalizeTag, formatTagName } from '../../lib/tags';
+
+interface Props {
+  tags: Map<string, number>;
+}
+
+const { tags } = Astro.props;
+
+// Sort tags alphabetically
+const sortedTags = Array.from(tags.entries()).sort(([a], [b]) => a.localeCompare(b));
+---
+
+<ul class="tag-list">
+  {sortedTags.map(([tag, count]) => (
+    <li>
+      <a href={`/tags/${normalizeTag(tag)}`}>{formatTagName(tag)}</a>
+      <span class="count">({count})</span>
+    </li>
+  ))}
+</ul>

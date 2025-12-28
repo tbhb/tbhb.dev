@@ -1,0 +1,50 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+import SEO from '../components/seo/SEO.astro';
+import PostMeta from '../components/blog/PostMeta.astro';
+import PostTags from '../components/blog/PostTags.astro';
+import { formatReadingTime } from '../lib/reading-time';
+import type { Post } from '../lib/collections';
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const { title, description, publishedAt, updatedAt, category, tags } = post.data;
+const { Content } = await render(post);
+
+// Get raw content for reading time calculation
+const rawContent = post.body ?? '';
+const readingTime = formatReadingTime(rawContent);
+---
+
+<BaseLayout title={`${title} - Tony Burns`} description={description} currentPage="/writing">
+  <SEO
+    slot="head"
+    type="post"
+    title={title}
+    description={description}
+    publishedAt={publishedAt}
+    updatedAt={updatedAt}
+    tags={tags}
+    slug={post.id}
+  />
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">{title}</h1>
+      <PostMeta date={publishedAt} readingTime={readingTime} category={category} />
+    </header>
+
+    <div class="post-content prose">
+      <Content />
+    </div>
+
+    {tags.length > 0 && (
+      <footer>
+        <PostTags tags={tags} />
+      </footer>
+    )}
+  </article>
+</BaseLayout>

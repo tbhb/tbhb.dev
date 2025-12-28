@@ -1,0 +1,20 @@
+---
+import type { Post } from '../../lib/collections';
+import { formatDate, formatDateISO } from '../../lib/dates';
+
+interface Props {
+  post: Post;
+  showExcerpt?: boolean;
+}
+
+const { post, showExcerpt = false } = Astro.props;
+const { title, description, publishedAt } = post.data;
+---
+
+<li class="post-list__item">
+  <article>
+    <time datetime={formatDateISO(publishedAt)}>{formatDate(publishedAt)}</time>
+    <h3><a href={`/writing/${post.id}`}>{title}</a></h3>
+    {showExcerpt && description && <p>{description}</p>}
+  </article>
+</li>

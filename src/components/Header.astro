@@ -1,0 +1,31 @@
+---
+interface Props {
+  currentPage?: string;
+}
+
+const { currentPage } = Astro.props;
+
+const navItems = [
+  { href: '/about', label: 'About' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/writing', label: 'Writing' },
+];
+---
+
+<header class="site-header">
+  <a href="/" class="site-logo">Tony Burns</a>
+  <nav class="nav-primary" aria-label="Primary">
+    <ul class="nav-list">
+      {navItems.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            aria-current={currentPage === item.href ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>

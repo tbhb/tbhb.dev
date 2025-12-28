@@ -1,0 +1,28 @@
+---
+title: "Projects"
+description: "Selected projects and open source work by Tony Burns."
+---
+
+A selection of projects I have built or contributed to. Some are tools for developers, others are experiments in new ideas.
+
+## typing-graph
+
+A building block for Python libraries that derive runtime behavior from type annotations. Pass any type (generics, `Annotated`, dataclasses, `TypedDict`, PEP 695 aliases) and get back a graph of nodes with metadata hoisting, qualifier detection, and semantic edge information.
+
+Built on Pydantic's typing-inspection and designed for compatibility with annotated-types, typing-graph provides the foundation for frameworks that need to understand type structures: validation libraries, CLI argument parsers, ORMs, and code generators. It handles the introspection so you can focus on what to do with the types.
+
+**Technologies:** Python, typing-inspection
+
+[Documentation](https://typing-graph.tbhb.dev) | [PyPI](https://pypi.org/project/typing-graph/) | [Source code](https://github.com/tbhb/typing-graph)
+
+---
+
+## JSONLT
+
+JSONLT (JSON Lines Table) is a data format specification for storing keyed records in append-only files using JSON Lines. Optimized for version control diffs and human readability, it provides a simple way to manage structured data that changes over time.
+
+The format has reference implementations in Python, Go, JavaScript, Ruby, and Rust. Each implementation follows the same specification, making it easy to work with JSONLT files across different languages and environments.
+
+**Technologies:** JSON Lines, Python, Go, JavaScript, Ruby, Rust
+
+[Specification](https://jsonlt.org/latest/) | [Website](https://jsonlt.org/) | [Source code](https://github.com/jsonlt/jsonlt)

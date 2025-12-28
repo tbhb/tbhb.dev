@@ -1,0 +1,24 @@
+---
+import type { Category } from '../../lib/collections';
+
+interface CategoryWithCount {
+  category: Category;
+  postCount: number;
+}
+
+interface Props {
+  categories: CategoryWithCount[];
+}
+
+const { categories } = Astro.props;
+---
+
+<ul class="category-list">
+  {categories.map(({ category, postCount }) => (
+    <li>
+      <a href={`/categories/${category.data.slug}`}>{category.data.name}</a>
+      <p>{category.data.description}</p>
+      <span class="count">{postCount} {postCount === 1 ? 'post' : 'posts'}</span>
+    </li>
+  ))}
+</ul>

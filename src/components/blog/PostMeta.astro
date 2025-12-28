@@ -1,0 +1,36 @@
+---
+import { formatDate, formatDateISO } from '../../lib/dates';
+
+interface Props {
+  date: Date;
+  readingTime?: string;
+  category?: string;
+}
+
+const { date, readingTime, category } = Astro.props;
+
+function getCategoryName(slug: string): string {
+  const names: Record<string, string> = {
+    essays: 'Essays',
+    notes: 'Notes',
+    tutorials: 'Tutorials',
+  };
+  return names[slug] ?? slug;
+}
+---
+
+<div class="post-meta">
+  <time datetime={formatDateISO(date)}>{formatDate(date)}</time>
+  {readingTime && (
+    <>
+      <span class="post-meta__separator" aria-hidden="true">/</span>
+      <span>{readingTime}</span>
+    </>
+  )}
+  {category && (
+    <>
+      <span class="post-meta__separator" aria-hidden="true">/</span>
+      <a href={`/categories/${category}`}>{getCategoryName(category)}</a>
+    </>
+  )}
+</div>

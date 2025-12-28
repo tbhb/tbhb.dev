@@ -1,0 +1,22 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import SEO from '../components/seo/SEO.astro';
+import { DEFAULT_DESCRIPTION } from '../lib/seo';
+
+interface Props {
+  title: string;
+  description?: string;
+  currentPage?: string;
+}
+
+const { title, description, currentPage } = Astro.props;
+const pageDescription = description ?? DEFAULT_DESCRIPTION;
+---
+
+<BaseLayout title={`${title} - Tony Burns`} description={pageDescription} currentPage={currentPage}>
+  <SEO slot="head" type="page" title={title} description={pageDescription} />
+  <h1>{title}</h1>
+  <div class="prose">
+    <slot />
+  </div>
+</BaseLayout>

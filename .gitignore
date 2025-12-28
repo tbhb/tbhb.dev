@@ -23,6 +23,12 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
-# Vale styles
-.vale/
-!.vale/config/vocabularies/tbhb
+# Vale styles (ignore downloaded packages, keep vendored and vocabulary)
+.vale/*
+!.vale/tbhb/
+!.vale/config/
+
+# Internal settings
+.claude
+.oaps
+.lighthouseci/
