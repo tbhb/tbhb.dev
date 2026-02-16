@@ -26,7 +26,7 @@
     "@fontsource/spectral": "^5.2.8",
     "@lhci/cli": "0.15.1",
     "lighthouse": "13.0.1",
-    "markdownlint-cli2": "0.20.0",
+    "markdownlint-cli2": "0.21.0",
     "shiki": "3.21.0",
     "wrangler": "4.54.0"
   }
